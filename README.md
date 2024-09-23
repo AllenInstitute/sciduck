@@ -10,3 +10,7 @@ datasets of more than one million cells.
     width="200"
 >
 </div>
+
+## Installation
+
+`pip install sciduck`
