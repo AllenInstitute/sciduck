@@ -48,10 +48,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sciduck-annotation-table-module">sciduck.annotation_table module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-sciduck.basic_qc">sciduck.basic_qc module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sciduck.basic_qc.filter_on_cluster_entropy"><code class="docutils literal notranslate"><span class="pre">filter_on_cluster_entropy()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sciduck.basic_qc.filter_on_counts_genes"><code class="docutils literal notranslate"><span class="pre">filter_on_counts_genes()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sciduck.basic_qc.filter_on_precomputed_metrics"><code class="docutils literal notranslate"><span class="pre">filter_on_precomputed_metrics()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#sciduck.basic_qc.filter_utilizing_coarse_labels"><code class="docutils literal notranslate"><span class="pre">filter_utilizing_coarse_labels()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#sciduck.basic_qc.filter_on_cluster_entropy"><code class="docutils literal notranslate"><span class="pre">filter_on_cluster_entropy()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#sciduck-entropy-qc-module">sciduck.entropy_qc module</a></li>
@@ -97,6 +97,25 @@
 </section>
 <section id="module-sciduck.basic_qc">
 <span id="sciduck-basic-qc-module"></span><h2>sciduck.basic_qc module<a class="headerlink" href="#module-sciduck.basic_qc" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="sciduck.basic_qc.filter_on_cluster_entropy">
+<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">filter_on_cluster_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_thresholds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sciduck.basic_qc.filter_on_cluster_entropy" title="Link to this definition"></a></dt>
+<dd><p>Filter samples based on cluster entropy.
+:param adata: Anndata object.
+:type adata: .h5ad
+:param cluster_column: Column name in adata.obs containing cluster labels.
+:type cluster_column: str
+:param entropy_columns: Column name in adata.obs containing entropy values.
+:type entropy_columns: str
+:param entropy_thresholds: Minimum entropy values for each annotation being considered.
+:type entropy_thresholds: dict</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnnData | None</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="sciduck.basic_qc.filter_on_counts_genes">
 <span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">filter_on_counts_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">13000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sciduck.basic_qc.filter_on_counts_genes" title="Link to this definition"></a></dt>
@@ -159,25 +178,6 @@
 :type coarse_label_threshold: dict
 :param inplace: Update the adata object in place or return unmodified object with keeper_cells flagged.
 :type inplace: bool</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>AnnData | None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sciduck.basic_qc.filter_on_cluster_entropy">
-<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">filter_on_cluster_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_thresholds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sciduck.basic_qc.filter_on_cluster_entropy" title="Link to this definition"></a></dt>
-<dd><p>Filter samples based on cluster entropy.
-:param adata: Anndata object.
-:type adata: .h5ad
-:param cluster_column: Column name in adata.obs containing cluster labels.
-:type cluster_column: str
-:param entropy_columns: Column name in adata.obs containing entropy values.
-:type entropy_columns: str
-:param entropy_thresholds: Minimum entropy values for each annotation being considered.
-:type entropy_thresholds: dict</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>AnnData | None</p>
