@@ -14,15 +14,15 @@ def filter_on_counts_genes(adata: AnnData,
     Filter samples based on number of counts (UMIs) and genes detected.
 
     Args:
-        adata (AnnData): Anndata object.
-        min_counts (int): Minimum counts detected.
-        max_counts (int): Maximum counts detected.
-        min_genes (int): Minimum genes detected.
-        max_genes (int): Maximum genes detected.
-        inplace (bool): Update the adata object in place or return unmodified object with keeper_cells flagged.
+        adata: Anndata object.
+        min_counts: Minimum counts detected.
+        max_counts: Maximum counts detected.
+        min_genes: Minimum genes detected.
+        max_genes: Maximum genes detected.
+        inplace: Update the adata object in place or return unmodified object with keeper_cells flagged.
 
     Returns:
-        AnnData | None
+        Returns either AnnData | None
     """
     if isinstance(adata, AnnData):
         ## Filter cells based on counts and genes detected
@@ -56,16 +56,16 @@ def filter_on_precomputed_metrics(adata: AnnData,
     Filter samples based on precomputed quality control metrics.
 
     Args:
-        adata (AnnData): Anndata object.
-        doublet_score (float): Maximum doublet score.
-        pct_counts_mt (float): Maximum percentage of counts in mitochondrial genes.
-        GEX_Reads_mapped_confidently_to_genome (float): Minimum percentage of confidently mapped reads. There is no pre-defined good practice for threshold, user must specify.
-        GEX_Reads_mapped_to_genome (float): Minimum percentage of reads mapped to genome. There is no pre-defined good practice for threshold, user must specify.
-        GEX_Reads_with_TSO (float): Maximum percentage of reads with TSO, per cell. There is no pre-defined good practice for threshold, user must specify.
-        inplace (bool): Update the adata object in place or return unmodified object with keeper_cells flagged.
+        adata: Anndata object.
+        doublet_score: Maximum doublet score.
+        pct_counts_mt: Maximum percentage of counts in mitochondrial genes.
+        GEX_Reads_mapped_confidently_to_genome: Minimum percentage of confidently mapped reads. There is no pre-defined good practice for threshold, user must specify.
+        GEX_Reads_mapped_to_genome: Minimum percentage of reads mapped to genome. There is no pre-defined good practice for threshold, user must specify.
+        GEX_Reads_with_TSO: Maximum percentage of reads with TSO, per cell. There is no pre-defined good practice for threshold, user must specify.
+        inplace: Update the adata object in place or return unmodified object with keeper_cells flagged.
 
     Returns:
-        AnnData | None
+        Returns either AnnData | None
     """
     if isinstance(adata, AnnData):
         ## Filter cells based on counts and genes detected
@@ -111,14 +111,14 @@ def filter_utilizing_coarse_labels(adata: AnnData,
     Filter samples based on coarse label specific thresholds for genes detected.
 
     Args:
-        adata (AnnData): Anndata object.
-        coarse_label_column (str): Column name in adata.obs containing coarse labeling identifying neuron and non-neuronal cell types.
-        coarse_label_map (dict): Coarse cell type labels to define specific filtering on.
-        coarse_label_gene_threshold (dict): Minimum genes detected for each coarse label.
-        inplace (bool): Update the adata object in place or return unmodified object with keeper_cells flagged.
+        adata: Anndata object.
+        coarse_label_column: Column name in adata.obs containing coarse labeling identifying neuron and non-neuronal cell types.
+        coarse_label_map: Coarse cell type labels to define specific filtering on.
+        coarse_label_gene_threshold: Minimum genes detected for each coarse label.
+        inplace: Update the adata object in place or return unmodified object with keeper_cells flagged.
 
     Returns:
-        AnnData | None
+        Returns either AnnData | None
     """
     if isinstance(adata, AnnData):
         ## Filter cells based on counts and genes detected
@@ -143,13 +143,13 @@ def filter_on_cluster_entropy(adata: AnnData,
     Filter samples based on entropy of quality control metrics or metadata for each cluster.
 
     Args:
-        adata (AnnData): Anndata object.
-        cluster_column (str): Column name in adata.obs containing cluster labels.
-        entropy_columns (str): Column name in adata.obs containing entropy values.
-        entropy_thresholds (dict): Minimum entropy values for each annotation being considered.
+        adata: type AnnData: Anndata object.
+        cluster_column: Column name in adata.obs containing cluster labels.
+        entropy_columns: Column name in adata.obs containing entropy values.
+        entropy_thresholds: Minimum entropy values for each annotation being considered.
         
     Returns:
-        AnnData | None
+        Returns either AnnData | None
     """
     if isinstance(adata, AnnData):
         ## Filter cells based on counts and genes detected

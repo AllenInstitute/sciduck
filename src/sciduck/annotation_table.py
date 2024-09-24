@@ -15,7 +15,7 @@ def build_annotation_table(adata: AnnData,
     
     Args:
         adata (AnnData): Anndata object with `annotations` in adata.obs.
-        annotations (list of str): Cluster summary annotations specific to data.
+        annotations (str): Cluster summary annotations specific to data.
         mapping_summary (dict): A dictionary to store the mapping summary. User can pass in an existing dictionary to append to if desired.
     
     Returns:
