@@ -9,17 +9,17 @@ def build_annotation_table(adata: AnnData,
                             annotation_alerts: dict = {"donor_name": 0.90, "load_name": 0.95, "roi": 0.95},
                             add_dominant_library_info: bool = True,
                             add_entropy_info: bool = True,
-                            mapping_summary: dict = {}):
+                            mapping_summary: dict = {}) -> dict:
     """
     Build a standardized table of annotations describing each cluster to be used for taxonomy development or communication.
     
     Args:
-        adata (AnnData): Anndata object with `annotations` in adata.obs.
-        annotations (str): Cluster summary annotations specific to data.
-        mapping_summary (dict): A dictionary to store the mapping summary. User can pass in an existing dictionary to append to if desired.
+        adata: Anndata object with `annotations` in `obs`.
+        annotations: Cluster summary annotations specific to data.
+        mapping_summary: A dictionary to store the mapping summary. User can pass in an existing dictionary to append to if desired.
     
     Returns:
-        dict: A mapping_summary containing character and numeric summaries along with donor/lib/roi composition alerts.
+        A mapping_summary containing character and numeric summaries along with donor/lib/roi composition alerts.
     """
     ## Annotations summaries
     for anno in annotations:
@@ -50,17 +50,16 @@ def build_annotation_table(adata: AnnData,
     
     return mapping_summary
 
-def add_dominant_library_info(adata: AnnData,
-                                mapping_summary: dict
-                            ) -> dict:
-    """Add dominant library information to the mapping summary.
+def add_dominant_library_info(adata: AnnData, mapping_summary: dict) -> dict:
+    """
+    Add dominant library information to the mapping summary.
+
     Args:
-        adata (AnnData): Anndata object with `annotations` in adata.obs.
-        mapping_summary (dict): A pre-existing mapping summary dictionary to add information on dominant library.
+        adata: Anndata object with `annotations` in `obs`.
+        mapping_summary: A pre-existing mapping summary dictionary to add information on dominant library.
     
     Returns:
-        dict: A mapping_summary containing dominant library information.
-
+        A mapping_summary containing dominant library information.
     """
 
     ## Calculate the total number of cells for each library

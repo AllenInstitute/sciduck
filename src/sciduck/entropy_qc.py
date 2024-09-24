@@ -11,13 +11,13 @@ def filter_on_cluster_entropy(adata: AnnData,
     Filter samples based on cluster entropy.
 
     Args:
-        adata (AnnData): Anndata object.
-        cluster_column (str): Column name in adata.obs containing cluster labels.
-        entropy_columns (str): Column name in adata.obs containing entropy values.
-        entropy_thresholds (dict): Minimum entropy values for each annotation being considered.
+        adata: Anndata object.
+        cluster_column: Column name in adata.obs containing cluster labels.
+        entropy_columns: Column name in adata.obs containing entropy values.
+        entropy_thresholds: Minimum entropy values for each annotation being considered.
 
     Returns:
-        AnnData | None
+        Returns either AnnData | None
     """
     if isinstance(adata, AnnData):
         ## Filter cells based on counts and genes detected
@@ -45,12 +45,12 @@ def cluster_entropy_qc_metric(adata: AnnData,
     Compute entropy (mixing) of an annotation within a pre-defined cluster.
 
     Args:
-        adata (AnnData): Anndata object.
-        cluster_column (str): Column name in adata.obs containing cluster labels.
-        annotation_columns (list): Column name in adata.obs containing annotations.
+        adata: Anndata object.
+        cluster_column: Column name in `obs` containing cluster labels.
+        annotation_columns: Column name in `obs` containing annotations.
 
     Returns:
-        list: A list of cluster entropy quality control metrics.
+        A list of cluster entropy quality control metrics.
     """
     ##
     print("Computing cluster entropy on: " + annotation_column)
@@ -73,13 +73,13 @@ def cell_entropy_qc_metric(adata: AnnData,
     Compute entropy (mixing) of annotations within a cells local neighborhood. 
 
     Args:
-        adata (AnnData): adata object with `annotations` in adata.obs.
-        annotations (list of str): Cell level annotations.
-        nearest_neighbors (int): Number of nearest neighbors.
-        dim (str): Dimensionality reduction within adata.obsm.
+        adata: AnnData object with `annotations`
+        annotations: Cell level annotations.
+        nearest_neighbors: Number of nearest neighbors.
+        dim: Dimensionality reduction
         
     Returns:
-        adata
+        Returns the updated AnnData object.
     """
     ## Build nearest neighbor tree for fast lookup
     print("Building nearest neighbor tree.")
