@@ -7,15 +7,15 @@ def build_annotation_table(adata: AnnData,
                             numeric_annotations: list = ["doublet_score", "pct_counts_mt"],
                             min_percent: float = 0.05,
                             annotation_alerts: dict = {"donor_name": 0.90, "load_name": 0.95, "roi": 0.95},
-                            add_dominant_library_info: bool = True,
-                            add_entropy_info: bool = True,
                             mapping_summary: dict = {}) -> dict:
     """
     Build a standardized table of annotations describing each cluster to be used for taxonomy development or communication.
     
     Args:
         adata: Anndata object with `annotations` in `obs`.
-        annotations: Cluster summary annotations specific to data.
+        categorical_annotations: List of categorical metadata to include.
+        numeric_annotations: List of numeric metadata to include.
+        min_percent: Minimal percentrage to print annotation.
         mapping_summary: A dictionary to store the mapping summary. User can pass in an existing dictionary to append to if desired.
     
     Returns:
@@ -50,12 +50,15 @@ def build_annotation_table(adata: AnnData,
     
     return mapping_summary
 
-def add_dominant_library_info(adata: AnnData, mapping_summary: dict) -> dict:
+def add_dominant_library_info(adata: AnnData, 
+                    library_metadata_column: str = "load_name",
+                    mapping_summary: dict) -> dict:
     """
     Add dominant library information to the mapping summary.
 
     Args:
         adata: Anndata object with `annotations` in `obs`.
+        library_metadata_column: Defaults to `load_name` and describes the sequencing batch.
         mapping_summary: A pre-existing mapping summary dictionary to add information on dominant library.
     
     Returns:
@@ -63,7 +66,7 @@ def add_dominant_library_info(adata: AnnData, mapping_summary: dict) -> dict:
     """
 
     ## Calculate the total number of cells for each library
-    library_freq_total = adata.obs.groupby("load_name")["load_name"].size()
+    library_freq_total = adata.obs.groupby(library_metadata_column)[library_metadata_column].size()
     mapping_summary["dominant_library_percentage"] = {}
     mapping_summary["dominant_library_info"] = {}
 
@@ -71,7 +74,7 @@ def add_dominant_library_info(adata: AnnData, mapping_summary: dict) -> dict:
     for cluster in np.unique(adata.obs.cluster):
 
         ## Calculate the library composition for each cluster
-        cluster_library_freq = adata.obs[adata.obs["cluster"] == cluster].groupby("load_name").size()
+        cluster_library_freq = adata.obs[adata.obs["cluster"] == cluster].groupby(library_metadata_column).size()
         cluster_library_normalized = np.round(cluster_library_freq / cluster_library_freq.sum(), 4)      
 
         ## Information for the dominant library in the cluster

@@ -47,9 +47,9 @@ def filter_on_counts_genes(adata: AnnData,
 def filter_on_precomputed_metrics(adata: AnnData, 
                                     doublet_score: float = 0.3, 
                                     pct_counts_mt: float = 3.0, 
-                                    GEX_Reads_mapped_confidently_to_genome: float = 0.0, 
-                                    GEX_Reads_mapped_to_genome: float = 0.0, 
-                                    GEX_Reads_with_TSO: float = 1.0, 
+                                    min_GEX_Reads_mapped_confidently_to_genome: float = 0.0, 
+                                    min_GEX_Reads_mapped_to_genome: float = 0.0, 
+                                    max_GEX_Reads_with_TSO: float = 1.0, 
                                     inplace: bool = False,
                                 ) -> AnnData | None:
     """
@@ -59,9 +59,9 @@ def filter_on_precomputed_metrics(adata: AnnData,
         adata: Anndata object.
         doublet_score: Maximum doublet score.
         pct_counts_mt: Maximum percentage of counts in mitochondrial genes.
-        GEX_Reads_mapped_confidently_to_genome: Minimum percentage of confidently mapped reads. There is no pre-defined good practice for threshold, user must specify.
-        GEX_Reads_mapped_to_genome: Minimum percentage of reads mapped to genome. There is no pre-defined good practice for threshold, user must specify.
-        GEX_Reads_with_TSO: Maximum percentage of reads with TSO, per cell. There is no pre-defined good practice for threshold, user must specify.
+        min_GEX_Reads_mapped_confidently_to_genome: Minimum percentage of confidently mapped reads. There is no pre-defined good practice for threshold, user must specify.
+        min_GEX_Reads_mapped_to_genome: Minimum percentage of reads mapped to genome. There is no pre-defined good practice for threshold, user must specify.
+        max_GEX_Reads_with_TSO: Maximum percentage of reads with TSO, per cell. There is no pre-defined good practice for threshold, user must specify.
         inplace: Update the adata object in place or return unmodified object with keeper_cells flagged.
 
     Returns:
