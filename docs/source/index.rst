@@ -16,4 +16,4 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   sciduck
+   modules
