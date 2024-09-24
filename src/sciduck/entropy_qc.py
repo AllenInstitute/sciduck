@@ -13,7 +13,7 @@ def filter_on_cluster_entropy(adata: AnnData,
     Args:
         adata: Anndata object.
         cluster_column: Column name in adata.obs containing cluster labels.
-        entropy_columns: Column name in adata.obs containing entropy values.
+        entropy_columns: Column name in adata.obs to compute entropy on.
         entropy_thresholds: Minimum entropy values for each annotation being considered.
 
     Returns:
@@ -63,7 +63,6 @@ def cluster_entropy_qc_metric(adata: AnnData,
     ##
     return qc_entropy
 
-## This is stored on github but needs a better home/repo. 
 def cell_entropy_qc_metric(adata: AnnData,
                             annotation_columns: list,
                             nearest_neighbors: int = 15, 

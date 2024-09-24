@@ -134,36 +134,40 @@ def filter_utilizing_coarse_labels(adata: AnnData,
         else:
             return adata
 
-def filter_on_cluster_entropy(adata: AnnData,
-                                cluster_column: str,
-                                annotation_columns: list,
-                                annotation_thresholds: dict,
-                            ) -> AnnData | None:
-    """
-    Filter samples based on entropy of quality control metrics or metadata for each cluster.
-
-    Args:
-        adata: type AnnData: Anndata object.
-        cluster_column: Column name in adata.obs containing cluster labels.
-        entropy_columns: Column name in adata.obs containing entropy values.
-        entropy_thresholds: Minimum entropy values for each annotation being considered.
-        
-    Returns:
-        Returns either AnnData | None
-    """
-    if isinstance(adata, AnnData):
-        ## Filter cells based on counts and genes detected
-        if 'keeper_cells' not in adata.obs.columns:
-            adata.obs["keeper_cells"] = [True] * adata.shape[0]
-        ## Compute cluster entropy for each annotation
-        for anno in annotation_columns:
-            adata.obs[anno + "_entropy"] = cluster_entropy_qc_metric(adata, cluster_column, anno)
-        ## Apply filtering based on entropy thresholds
-        for anno, threshold in annotation_thresholds.items():
-            adata.obs["keeper_cells"] &= adata.obs[anno + "_entropy"] > threshold
-        ##
-        if inplace:
-            adata._inplace_subset_obs(adata.obs["keeper_cells"])
-            return None
-        else:
-            return adata
+# def filter_on_cluster_metrics(adata: AnnData,
+#                                 cluster_column: str,
+#                                 annotation_columns: list,
+#                                 annotation_thresholds: dict, ## HOW TO ENCODE DIRECTION, E,G. > 0.3 doublet score or < 0.9 TSO.
+#                             ) -> AnnData | None:
+#     """
+#     Filter samples based on entropy of quality control metrics or metadata for each cluster.
+#
+#     Args:
+#         adata: type AnnData: Anndata object.
+#         cluster_column: Column name in adata.obs containing cluster labels.
+#         annotation_columns: Column name in adata.obs containing entropy values.
+#         annotation_thresholds: Minimum entropy values for each annotation being considered.
+#        
+#     Returns:
+#         Returns either AnnData | None
+#     """
+#     if isinstance(adata, AnnData):
+#         ## Filter cells based on counts and genes detected
+#         if 'keeper_cells' not in adata.obs.columns:
+#             adata.obs["keeper_cells"] = [True] * adata.shape[0]
+#         ## Compute cluster medians for each annotation
+#         for anno in annotation_columns:
+#             try:
+#                 adata.obs[anno + "_cluster_median"] = adata.obs.groupby("cluster")[anno].median().round(4)
+#             except:
+#                 warnings.warn(f"Unable to compute cluster median for {anno}. Skipping this metric.", UserWarning)
+#                 continue
+#         ## Apply filtering based on user provided thresholds
+#         for anno, threshold in annotation_thresholds.items():
+#             adata.obs["keeper_cells"] &= adata.obs[anno + "_entropy"] > threshold
+#         ##
+#         if inplace:
+#             adata._inplace_subset_obs(adata.obs["keeper_cells"])
+#             return None
+#         else:
+#             return adata
