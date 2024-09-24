@@ -17,4 +17,3 @@ Contents
    :maxdepth: 2
 
    sciduck
-   modules
