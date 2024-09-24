@@ -1,4 +1,4 @@
-from adata import AnnData
+from anndata import AnnData
 import scanpy as sc
 import numpy as np
 
@@ -8,7 +8,6 @@ def filter_on_cluster_entropy(adata: AnnData,
                                 annotation_thresholds: dict,
                             ) -> AnnData | None:
     """Filter samples based on cluster entropy.
-
     Args:
         adata (.h5ad): Anndata object.
         cluster_column (str): Column name in adata.obs containing cluster labels.

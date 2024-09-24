@@ -10,7 +10,8 @@ def filter_on_counts_genes(adata: AnnData,
                             max_genes: int = 13000, 
                             inplace: bool = False
                         ) -> AnnData | None:
-    """Filter samples based on number of counts (UMIs) and genes detected.
+    """
+    Filter samples based on number of counts (UMIs) and genes detected.
 
     Args:
         adata (.h5ad): Anndata object.
@@ -106,7 +107,8 @@ def filter_utilizing_coarse_labels(adata: AnnData,
                                     coarse_label_gene_threshold: dict = {"Neurons": 2000, "Non-Neurons": 1000},
                                     inplace: bool = False
                                 ) -> AnnData | None:
-    """Filter samples based on coarse label specific thresholds for genes detected.
+    """
+    Filter samples based on coarse label specific thresholds for genes detected.
 
     Args:
         adata (.h5ad): Anndata object.
@@ -137,8 +139,9 @@ def filter_on_cluster_entropy(adata: AnnData,
                                 annotation_columns: list,
                                 annotation_thresholds: dict,
                             ) -> AnnData | None:
-    """Filter samples based on entropy of quality control metrics or metadata for each cluster.
-
+    """
+    Filter samples based on entropy of quality control metrics or metadata for each cluster.
+    
     Args:
         adata (.h5ad): Anndata object.
         cluster_column (str): Column name in adata.obs containing cluster labels.

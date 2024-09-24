@@ -1,4 +1,4 @@
-from adata import AnnData
+from anndata import AnnData
 import scanpy as sc
 import numpy as np
 
@@ -10,7 +10,8 @@ def build_annotation_table(adata: AnnData,
                             add_dominant_library_info: bool = True,
                             add_entropy_info: bool = True,
                             mapping_summary: dict = {}):
-    """Build a standardized table of annotations describing each cluster to be used for taxonomy development or communication.
+    """
+    Build a standardized table of annotations describing each cluster to be used for taxonomy development or communication.
     
     Args:
         adata (.h5ad): Anndata object with `annotations` in adata.obs.
@@ -53,13 +54,13 @@ def add_dominant_library_info(adata: AnnData,
                                 mapping_summary: dict
                             ) -> dict:
     """Add dominant library information to the mapping summary.
-    
     Args:
         adata (.h5ad): Anndata object with `annotations` in adata.obs.
         mapping_summary (dict): A pre-existing mapping summary dictionary to add information on dominant library.
     
     Returns:
         dict: A mapping_summary containing dominant library information.
+
     """
 
     ## Calculate the total number of cells for each library
