@@ -10,17 +10,18 @@ def filter_on_counts_genes(adata: AnnData,
                             max_genes: int = 13000, 
                             inplace: bool = False
                         ) -> AnnData | None:
-    """
-    Filter samples based on number of counts (UMIs) and genes detected.
-    Args:
-        adata (.h5ad): Anndata object.
-        min_counts (int): Minimum counts detected.
-        max_counts (int): Maximum counts detected.
-        min_genes (int): Minimum genes detected.
-        max_genes (int): Maximum genes detected.
-        inplace (bool): Update the adata object in place or return unmodified object with keeper_cells flagged.
-    Returns:
-        AnnData | None
+    """Filter samples based on number of counts (UMIs) and genes detected.
+    
+        :param anndata adata: Anndata object.
+        :param int min_counts: Minimum counts detected.
+        :param int max_counts: Maximum counts detected.
+        :param int min_genes: Minimum genes detected.
+        :param int max_genes: Maximum genes detected.
+        :param bool inplace: Update the adata object in place or return unmodified object with keeper_cells flagged.
+
+        :returns: Anndata object with cells filtered based on counts and genes detected. If inplace is False, returns a copy of the object with keeper_cells flagged.
+
+        :rtype: AnnData | None
     """
     if isinstance(adata, AnnData):
         ## Filter cells based on counts and genes detected
