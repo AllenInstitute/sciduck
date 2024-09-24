@@ -1,7 +1,6 @@
 # sciduck: single cell data analyis unification and communication toolkit
 
-Sciduck is a scalable toolkit for unified and communicated quality control and annotation for single cell data 
-built following [anndata][] and [scanpy][].  It provides tranparency to single cell analysis pipelines for reproducible data analysis and taxonomy building.  The Python-based implementation efficiently deals with
+`sciduck` provides a transparent framework for single cell/nuclei quality control and annotation. The package was build following [anndata][] and [scanpy][] and should easily fit into related workflows. It provides tranparency to single cell analysis pipelines for reproducible data analysis and annotation.  The Python-based implementation efficiently deals with
 datasets of more than one million cells.
 
 <div align="center">

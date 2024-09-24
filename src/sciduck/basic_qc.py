@@ -11,7 +11,7 @@ def filter_on_counts_genes(adata: AnnData,
                             inplace: bool = False
                         ) -> AnnData | None:
     """
-    Filter samples based on counts and genes detected.
+    Filter samples based on number of counts (UMIs) and genes detected.
     Args:
         adata (.h5ad): Anndata object.
         min_counts (int): Minimum counts detected.
@@ -100,16 +100,16 @@ def filter_utilizing_coarse_labels(adata: AnnData,
                                     coarse_label_column: str,
                                     coarse_label_map: dict = {"Neurons": ["Excitatory", "Inhibitory"], 
                                                                 "Non-Neurons": ["Astrocytes", "Oligodendrocytes", "Microglia", "Endothelial", "Pericytes"]},
-                                    coarse_label_threshold: dict = {"Neurons": 2000, "Non-Neurons": 1000},
+                                    coarse_label_gene_threshold: dict = {"Neurons": 2000, "Non-Neurons": 1000},
                                     inplace: bool = False
                                 ) -> AnnData | None:
     """
-    Filter samples based on coarse labels.
+    Filter samples based on coarse label specific thresholds for genes detected.
     Args:
         adata (.h5ad): Anndata object.
         coarse_label_column (str): Column name in adata.obs containing coarse labeling identifying neuron and non-neuronal cell types.
         coarse_label_map (dict): Coarse cell type labels to define specific filtering on.
-        coarse_label_threshold (dict): Minimum genes detected for each coarse label.
+        coarse_label_gene_threshold (dict): Minimum genes detected for each coarse label.
         inplace (bool): Update the adata object in place or return unmodified object with keeper_cells flagged.
     Returns:
         AnnData | None
@@ -134,7 +134,7 @@ def filter_on_cluster_entropy(adata: AnnData,
                                 annotation_thresholds: dict,
                             ) -> AnnData | None:
     """
-    Filter samples based on cluster entropy.
+    Filter samples based on entropy of quality control metrics or metadata for each cluster.
     Args:
         adata (.h5ad): Anndata object.
         cluster_column (str): Column name in adata.obs containing cluster labels.

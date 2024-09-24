@@ -5,7 +5,7 @@ requires = ["hatchling", "hatch-vcs"]
 [project]
 name = "sciduck"
 description = "single cell data analyis unification and communication toolkit"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 license = "BSD-3-clause"
 authors = [
     {name = "Nelson Johansen"},
