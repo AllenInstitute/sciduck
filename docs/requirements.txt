@@ -1,2 +1,6 @@
+anndata
+scanpy
+numpy
+## Read the docs
 sphinx_rtd_theme==3.0.0rc1
 sphinx==8.0.2
