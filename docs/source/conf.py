@@ -19,17 +19,74 @@ release = '00.00.01'
 # -- General configuration ------------------------------------------------
 
 extensions = [
-    'sphinx.ext.todo',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.automodule',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.napoleon'
+    "nbsphinx",
+    "myst_parser",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.coverage",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.linkcode",
+    "sphinx_autodoc_typehints",
+    "sphinx_plotly_directive",
 ]
 
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'markdown',
+    '.md': 'markdown',
+}
+
+myst_enable_extensions = [
+    "amsmath",
+    #"colon_fence",
+    #"deflist",
+    "dollarmath",
+    #"fieldlist",
+    #"html_admonition",
+    #"html_image",
+    #"linkify",
+    #"replacements",
+    #"smartquotes",
+    #"strikethrough",
+    #"substitution",
+    #"tasklist",
+]
+
+# Generate the API documentation when building
+autosummary_generate = True
+autodoc_member_order = 'bysource'
+# autodoc_default_flags = ['members']
 napoleon_google_docstring = False
-napoleon_use_param = False
-napoleon_use_ivar = True
+napoleon_numpy_docstring = True
+napoleon_include_init_with_doc = False
+napoleon_use_rtype = True  # having a separate entry generally helps readability
+napoleon_use_param = True
+napoleon_custom_sections = [('Params', 'Parameters')]
+todo_include_todos = False
+
+intersphinx_mapping = {
+    "anndata": ("https://anndata.readthedocs.io/en/stable/", None),
+    "ipython": ("https://ipython.readthedocs.io/en/stable/", None),
+    "matplotlib": ("https://matplotlib.org/", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "pandas": ("https://pandas.pydata.org/docs/", None),
+    "python": ("https://docs.python.org/3", None),
+    "scipy": ("https://docs.scipy.org/doc/scipy/reference/", None),
+    "sklearn": ("https://scikit-learn.org/stable/", None),
+    "scanpy": ("https://scanpy.readthedocs.io/en/stable/", None),
+}
+
+smv_branch_whitelist = r'main'  # Include all branches
+
+# Add any paths that contain templates here, relative to this directory.
+templates_path = ['_templates']
+
+# List of patterns, relative to source directory, that match files and
+# directories to ignore when looking for source files.
+# This pattern also affects html_static_path and html_extra_path.
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
