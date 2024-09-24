@@ -109,7 +109,6 @@ def filter_utilizing_coarse_labels(adata: AnnData,
                                 ) -> AnnData | None:
     """\
     Filter samples based on coarse label specific thresholds for genes detected.
-
     Args:
         adata: Anndata object.
         coarse_label_column: Column name in adata.obs containing coarse labeling identifying neuron and non-neuronal cell types.
