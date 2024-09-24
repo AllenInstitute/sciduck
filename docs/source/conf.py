@@ -44,6 +44,16 @@ project = 'sciduck'
 copyright = '2024, Nelson Johansen'
 author = 'Nelson Johansen'
 
+# Autodoc settings
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': False,  # Hide undocumented members
+    'private-members': False,  # Hide private members (_member)
+    'special-members': False,  # Hide special members (__member__)
+    'inherited-members': False,  # Hide inherited members
+    'show-inheritance': True,
+}
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 # pip install sphinx-rtd-theme; https://sphinx-themes.org/sample-sites/sphinx-rtd-theme/

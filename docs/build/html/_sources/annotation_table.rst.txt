@@ -5,27 +5,3 @@ sciduck.annotation\_table module
    :members:
    :undoc-members:
    :show-inheritance:
-
-sciduck.basic\_qc module
-------------------------
-
-.. automodule:: sciduck.basic_qc
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-sciduck.entropy\_qc module
---------------------------
-
-.. automodule:: sciduck.entropy_qc
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: sciduck
-   :members:
-   :undoc-members:
-   :show-inheritance:
