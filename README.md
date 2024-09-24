@@ -5,7 +5,7 @@ datasets of more than one million cells.
 
 <div align="center">
 <img
-    src="https://github.com/AllenInstitute/sciduck/logo/sciduck-logo.png"
+    src="https://github.com/AllenInstitute/sciduck/logo/sciduck_DALLEv0.png"
     width="200"
 >
 </div>
