@@ -8,7 +8,7 @@
 `make html`  ## in /docs
 
 ## Package building: hatchling
-## Bump version of package then:
+### Bump version of package then:
 `hatch build .`
 
 `hatch publish -u __token__ -a $SCIDUCK_PACKAGE_TOKEN`
