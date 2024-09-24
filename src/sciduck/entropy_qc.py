@@ -7,9 +7,11 @@ def filter_on_cluster_entropy(adata: AnnData,
                                 annotation_columns: list,
                                 annotation_thresholds: dict,
                             ) -> AnnData | None:
-    """Filter samples based on cluster entropy.
+    """
+    Filter samples based on cluster entropy.
+
     Args:
-        adata (.h5ad): Anndata object.
+        adata (AnnData): Anndata object.
         cluster_column (str): Column name in adata.obs containing cluster labels.
         entropy_columns (str): Column name in adata.obs containing entropy values.
         entropy_thresholds (dict): Minimum entropy values for each annotation being considered.
@@ -39,10 +41,11 @@ def cluster_entropy_qc_metric(adata: AnnData,
                                 cluster_column: str,
                                 annotation_column: str
                             ) -> list:
-    """Compute entropy (mixing) of an annotation within a pre-defined cluster.
+    """
+    Compute entropy (mixing) of an annotation within a pre-defined cluster.
 
     Args:
-        adata (.h5ad): Anndata object.
+        adata (AnnData): Anndata object.
         cluster_column (str): Column name in adata.obs containing cluster labels.
         annotation_columns (list): Column name in adata.obs containing annotations.
 
@@ -66,10 +69,11 @@ def cell_entropy_qc_metric(adata: AnnData,
                             nearest_neighbors: int = 15, 
                             dim: str = "X_scVI"
                         ) -> AnnData:
-    """Compute entropy (mixing) of annotations within a cells local neighborhood. 
+    """
+    Compute entropy (mixing) of annotations within a cells local neighborhood. 
 
     Args:
-        adata (.h5ad): adata object with `annotations` in adata.obs.
+        adata (AnnData): adata object with `annotations` in adata.obs.
         annotations (list of str): Cell level annotations.
         nearest_neighbors (int): Number of nearest neighbors.
         dim (str): Dimensionality reduction within adata.obsm.

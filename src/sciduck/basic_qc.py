@@ -14,7 +14,7 @@ def filter_on_counts_genes(adata: AnnData,
     Filter samples based on number of counts (UMIs) and genes detected.
 
     Args:
-        adata (.h5ad): Anndata object.
+        adata (AnnData): Anndata object.
         min_counts (int): Minimum counts detected.
         max_counts (int): Maximum counts detected.
         min_genes (int): Minimum genes detected.
@@ -56,7 +56,7 @@ def filter_on_precomputed_metrics(adata: AnnData,
     Filter samples based on precomputed quality control metrics.
 
     Args:
-        adata (.h5ad): Anndata object.
+        adata (AnnData): Anndata object.
         doublet_score (float): Maximum doublet score.
         pct_counts_mt (float): Maximum percentage of counts in mitochondrial genes.
         GEX_Reads_mapped_confidently_to_genome (float): Minimum percentage of confidently mapped reads. There is no pre-defined good practice for threshold, user must specify.
@@ -111,7 +111,7 @@ def filter_utilizing_coarse_labels(adata: AnnData,
     Filter samples based on coarse label specific thresholds for genes detected.
 
     Args:
-        adata (.h5ad): Anndata object.
+        adata (AnnData): Anndata object.
         coarse_label_column (str): Column name in adata.obs containing coarse labeling identifying neuron and non-neuronal cell types.
         coarse_label_map (dict): Coarse cell type labels to define specific filtering on.
         coarse_label_gene_threshold (dict): Minimum genes detected for each coarse label.
@@ -141,9 +141,9 @@ def filter_on_cluster_entropy(adata: AnnData,
                             ) -> AnnData | None:
     """
     Filter samples based on entropy of quality control metrics or metadata for each cluster.
-    
+
     Args:
-        adata (.h5ad): Anndata object.
+        adata (AnnData): Anndata object.
         cluster_column (str): Column name in adata.obs containing cluster labels.
         entropy_columns (str): Column name in adata.obs containing entropy values.
         entropy_thresholds (dict): Minimum entropy values for each annotation being considered.

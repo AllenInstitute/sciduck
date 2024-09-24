@@ -14,7 +14,7 @@ def build_annotation_table(adata: AnnData,
     Build a standardized table of annotations describing each cluster to be used for taxonomy development or communication.
     
     Args:
-        adata (.h5ad): Anndata object with `annotations` in adata.obs.
+        adata (AnnData): Anndata object with `annotations` in adata.obs.
         annotations (list of str): Cluster summary annotations specific to data.
         mapping_summary (dict): A dictionary to store the mapping summary. User can pass in an existing dictionary to append to if desired.
     
@@ -55,7 +55,7 @@ def add_dominant_library_info(adata: AnnData,
                             ) -> dict:
     """Add dominant library information to the mapping summary.
     Args:
-        adata (.h5ad): Anndata object with `annotations` in adata.obs.
+        adata (AnnData): Anndata object with `annotations` in adata.obs.
         mapping_summary (dict): A pre-existing mapping summary dictionary to add information on dominant library.
     
     Returns:
