@@ -20,6 +20,8 @@ release = '00.00.01'
 
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.automodule',
+    'sphinx.ext.autosummary',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon'
 ]
