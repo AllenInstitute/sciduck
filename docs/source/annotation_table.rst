@@ -1,9 +1,3 @@
-sciduck package
-===============
-
-Submodules
-----------
-
 sciduck.annotation\_table module
 --------------------------------
 
