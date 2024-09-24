@@ -1,1 +1,1 @@
-sphinx-apidoc -o docs/source sciduck/
+sphinx-apidoc -o docs/source src/sciduck/

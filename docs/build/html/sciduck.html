@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sciduck package &mdash; sciduck 00.00.01 documentation</title>
+  <title>sciduck package &mdash; sciduck  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=66b59bf7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=d7bb8d4d"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -43,14 +41,21 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sciduck</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">sciduck package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sciduck-annotation-table-module">sciduck.annotation_table module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sciduck-basic-qc-module">sciduck.basic_qc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-sciduck.basic_qc">sciduck.basic_qc module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sciduck.basic_qc.filter_on_counts_genes"><code class="docutils literal notranslate"><span class="pre">filter_on_counts_genes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sciduck.basic_qc.filter_on_precomputed_metrics"><code class="docutils literal notranslate"><span class="pre">filter_on_precomputed_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sciduck.basic_qc.filter_utilizing_coarse_labels"><code class="docutils literal notranslate"><span class="pre">filter_utilizing_coarse_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sciduck.basic_qc.filter_on_cluster_entropy"><code class="docutils literal notranslate"><span class="pre">filter_on_cluster_entropy()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#sciduck-entropy-qc-module">sciduck.entropy_qc module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-sciduck">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,14 +95,90 @@
 <section id="sciduck-annotation-table-module">
 <h2>sciduck.annotation_table module<a class="headerlink" href="#sciduck-annotation-table-module" title="Link to this heading"></a></h2>
 </section>
-<section id="sciduck-basic-qc-module">
-<h2>sciduck.basic_qc module<a class="headerlink" href="#sciduck-basic-qc-module" title="Link to this heading"></a></h2>
+<section id="module-sciduck.basic_qc">
+<span id="sciduck-basic-qc-module"></span><h2>sciduck.basic_qc module<a class="headerlink" href="#module-sciduck.basic_qc" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="sciduck.basic_qc.filter_on_counts_genes">
+<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">filter_on_counts_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">13000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sciduck.basic_qc.filter_on_counts_genes" title="Link to this definition"></a></dt>
+<dd><p>Filter samples based on counts and genes detected.
+Args:</p>
+<blockquote>
+<div><p>adata (.h5ad): Anndata object.
+min_counts (int): Minimum counts detected.
+max_counts (int): Maximum counts detected.
+min_genes (int): Minimum genes detected.
+max_genes (int): Maximum genes detected.
+inplace (bool): Update the adata object in place or return unmodified object with keeper_cells flagged.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>AnnData | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sciduck.basic_qc.filter_on_precomputed_metrics">
+<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">filter_on_precomputed_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doublet_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pct_counts_mt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GEX_Reads_mapped_confidently_to_genome</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GEX_Reads_mapped_to_genome</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GEX_Reads_with_TSO</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sciduck.basic_qc.filter_on_precomputed_metrics" title="Link to this definition"></a></dt>
+<dd><p>Filter samples based on precomputed quality control metrics.
+Args:</p>
+<blockquote>
+<div><p>adata (.h5ad): Anndata object.
+doublet_score (float): Maximum doublet score.
+pct_counts_mt (float): Maximum percentage of counts in mitochondrial genes.
+GEX_Reads_mapped_confidently_to_genome (float): Minimum percentage of confidently mapped reads. There is no pre-defined good practice for threshold, user must specify.
+GEX_Reads_mapped_to_genome (float): Minimum percentage of reads mapped to genome. There is no pre-defined good practice for threshold, user must specify.
+GEX_Reads_with_TSO (float): Maximum percentage of reads with TSO, per cell. There is no pre-defined good practice for threshold, user must specify.
+inplace (bool): Update the adata object in place or return unmodified object with keeper_cells flagged.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>AnnData | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sciduck.basic_qc.filter_utilizing_coarse_labels">
+<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">filter_utilizing_coarse_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarse_label_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarse_label_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'Neurons':</span> <span class="pre">['Excitatory',</span> <span class="pre">'Inhibitory'],</span> <span class="pre">'Non-Neurons':</span> <span class="pre">['Astrocytes',</span> <span class="pre">'Oligodendrocytes',</span> <span class="pre">'Microglia',</span> <span class="pre">'Endothelial',</span> <span class="pre">'Pericytes']}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarse_label_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'Neurons':</span> <span class="pre">2000,</span> <span class="pre">'Non-Neurons':</span> <span class="pre">1000}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sciduck.basic_qc.filter_utilizing_coarse_labels" title="Link to this definition"></a></dt>
+<dd><p>Filter samples based on coarse labels.
+Args:</p>
+<blockquote>
+<div><p>adata (.h5ad): Anndata object.
+coarse_label_column (str): Column name in adata.obs containing coarse labeling identifying neuron and non-neuronal cell types.
+coarse_label_map (dict): Coarse cell type labels to define specific filtering on.
+coarse_label_threshold (dict): Minimum genes detected for each coarse label.
+inplace (bool): Update the adata object in place or return unmodified object with keeper_cells flagged.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>AnnData | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sciduck.basic_qc.filter_on_cluster_entropy">
+<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">filter_on_cluster_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_thresholds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sciduck.basic_qc.filter_on_cluster_entropy" title="Link to this definition"></a></dt>
+<dd><p>Filter samples based on cluster entropy.
+Args:</p>
+<blockquote>
+<div><p>adata (.h5ad): Anndata object.
+cluster_column (str): Column name in adata.obs containing cluster labels.
+entropy_columns (str): Column name in adata.obs containing entropy values.
+entropy_thresholds (dict): Minimum entropy values for each annotation being considered.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>AnnData | None</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="sciduck-entropy-qc-module">
 <h2>sciduck.entropy_qc module<a class="headerlink" href="#sciduck-entropy-qc-module" title="Link to this heading"></a></h2>
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<section id="module-sciduck">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sciduck" title="Link to this heading"></a></h2>
+<p>sciduck</p>
+<p>single cell data analyis unification and communication toolkit</p>
 </section>
 </section>
 
