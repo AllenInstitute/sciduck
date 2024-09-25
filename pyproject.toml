@@ -40,7 +40,7 @@ dependencies = [
     "pandas >=1.5",
     "scipy>=1.8",
 ]
-version = "0.1.3"
+version = "0.1.4"
 
 [project.urls]
 Source = "https://github.com/AllenInstitute/sciduck"

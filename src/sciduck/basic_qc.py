@@ -11,7 +11,12 @@ def _check_adata(adata, column):
     if column not in adata.uns['qc_constraints'].keys():
         adata.uns['qc_constraints'][column] = {}
 
-def add_range_constraint(adata, column, gt=None, lt=None, subset=None, subset_values=None):
+def add_range_constraint(adata: AnnData, 
+                            column: str, 
+                            gt: float = None, 
+                            lt: float = None, 
+                            subset: str = None, 
+                            subset_values: list = None):
     """
     Adds a range constraint to a specific column in the AnnData object.
 
@@ -19,12 +24,12 @@ def add_range_constraint(adata, column, gt=None, lt=None, subset=None, subset_va
     [gt, lt]. Subsetting based on another column is supported.
 
     Args:
-        adata (AnnData): The AnnData object where constraints will be added.
-        column (str): The column in 'adata.obs' for which the range constraint will be applied.
-        gt (float, optional): The lower bound of the range (inclusive). If None, the lower bound is open.
-        lt (float, optional): The upper bound of the range (inclusive). If None, the upper bound is open.
-        subset (str, optional): The column in 'adata.obs' to use for subsetting the data.
-        subset_values (list, optional): A list of values for subsetting, applied to the 'subset' column.
+        adata: The AnnData object where constraints will be added.
+        column: The column in 'adata.obs' for which the range constraint will be applied.
+        gt: The lower bound of the range (inclusive). If None, the lower bound is open.
+        lt: The upper bound of the range (inclusive). If None, the upper bound is open.
+        subset: The column in 'adata.obs' to use for subsetting the data.
+        subset_values: A list of values for subsetting, applied to the 'subset' column.
     """
     constraint = {
         'gt': gt,
@@ -43,7 +48,11 @@ def add_range_constraint(adata, column, gt=None, lt=None, subset=None, subset_va
     constraint_key = f'constraint_{len(adata.uns["qc_constraints"][column]) + 1}'
     adata.uns['qc_constraints'][column][constraint_key] = constraint
 
-def add_exclude_constraint(adata, column, exclude_values, subset=None, subset_values=None):
+def add_exclude_constraint(adata: AnnData, 
+                            column: str, 
+                            exclude_values: list, 
+                            subset: str = None, 
+                            subset_values: list = None):
     """
     Adds an exclude constraint to a specific column in the AnnData object.
 
@@ -51,11 +60,11 @@ def add_exclude_constraint(adata, column, exclude_values, subset=None, subset_va
     Subsetting based on another column is supported.
 
     Args:
-        adata (AnnData): The AnnData object where constraints will be added.
-        column (str): The column in 'adata.obs' for which the exclude constraint will be applied.
-        exclude_values (list): The list of values that should be excluded from 'column'.
-        subset (str, optional): The column in 'adata.obs' to use for subsetting the data.
-        subset_values (list, optional): A list of values for subsetting, applied to the 'subset' column.
+        adata: The AnnData object where constraints will be added.
+        column: The column in 'adata.obs' for which the exclude constraint will be applied.
+        exclude_values: The list of values that should be excluded from 'column'.
+        subset: The column in 'adata.obs' to use for subsetting the data.
+        subset_values: A list of values for subsetting, applied to the 'subset' column.
     """
     
     constraint = {
@@ -75,7 +84,13 @@ def add_exclude_constraint(adata, column, exclude_values, subset=None, subset_va
     constraint_key = f'constraint_{len(adata.uns["qc_constraints"][column]) + 1}'
     adata.uns['qc_constraints'][column][constraint_key] = constraint
 
-def add_group_level_constraint(adata, column, groupby, gt=None, lt=None, agg_func='mean'):
+def add_group_level_constraint(adata: AnnData, 
+                                column: str, 
+                                groupby: str, 
+                                gt: float = None, 
+                                lt: float = None, 
+                                agg_func: str = 'mean'
+                            ):
     """
     Adds a group-level constraint to a specific column in the AnnData object.
 
@@ -83,13 +98,14 @@ def add_group_level_constraint(adata, column, groupby, gt=None, lt=None, agg_fun
     for the specified column. Cells in groups that meet the 'gt' and 'lt' conditions are kept.
 
     Args:
-        adata (AnnData): The AnnData object where constraints will be added.
-        column (str): The column in 'adata.obs' for which the group-level constraint will be applied.
-        groupby (str): The column in 'adata.obs' used to group the cells (e.g., cluster ID).
-        gt (float, optional): The lower bound for the aggregated group value. If None, the lower bound is open.
-        lt (float, optional): The upper bound for the aggregated group value. If None, the upper bound is open.
-        agg_func (str, optional): The aggregation function to apply to the groups. Can be 'mean', 'sum', 
+        adata: The AnnData object where constraints will be added.
+        column: The column in 'adata.obs' for which the group-level constraint will be applied.
+        groupby: The column in 'adata.obs' used to group the cells (e.g., cluster ID).
+        gt: The lower bound for the aggregated group value. If None, the lower bound is open.
+        lt: The upper bound for the aggregated group value. If None, the upper bound is open.
+        agg_func: The aggregation function to apply to the groups. Can be 'mean', 'sum', 
                                   'std', or 'median'. Default is 'mean'.
+
     """
     constraint = {
         'gt': gt,
@@ -106,7 +122,9 @@ def add_group_level_constraint(adata, column, groupby, gt=None, lt=None, agg_fun
     constraint_key = f'constraint_{len(adata.uns["qc_constraints"][column]) + 1}'
     adata.uns['qc_constraints'][column][constraint_key] = constraint
 
-def apply_constraints(adata, inplace=False):
+def apply_constraints(adata: AnnData, 
+                        inplace: bool = False
+                    ) -> AnnData:
     """
     Applies all quality control (QC) constraints stored in 'adata.uns["qc_constraints"]' to 'adata.obs'.
 
@@ -114,10 +132,10 @@ def apply_constraints(adata, inplace=False):
     (using a 'groupby' column). The resulting 'keeper_cells' column in 'adata.obs' indicates which cells passed the constraints.
 
     Args:
-        adata (AnnData): The AnnData object where constraints are applied.
-        inplace (bool, optional): If True, only the cells passing the constraints will be retained in 'adata'.
-                                  If False (default), the 'keeper_cells' column will be added to 'adata.obs' 
-                                  to indicate which cells passed the filtering.
+        adata: The AnnData object where constraints are applied.
+        inplace: If True, only the cells passing the constraints will be retained in 'adata'.
+                 If False (default), the 'keeper_cells' column will be added to 'adata.obs' 
+                 to indicate which cells passed the filtering.
 
     Returns:
         AnnData: The filtered AnnData object with the 'keeper_cells' column added to 'adata.obs'. If 'inplace=True', 
