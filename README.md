@@ -10,6 +10,10 @@ datasets of more than one million cells.
 >
 </div>
 
+## Documentation
+
+`https://sciduck.readthedocs.io/en/latest/`
+
 ## Installation
 
 `pip install sciduck`
