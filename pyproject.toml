@@ -9,7 +9,7 @@ requires-python = ">=3.9"
 license = "BSD-3-clause"
 authors = [
     {name = "Nelson Johansen"},
-    {name = "Yuanyuan Fu"},
+    {name = "Matthew Schmitz"},
     {name = "Dan Yuan"},
     {name = "Zizhen Yao"},
     {name = "Trygve Bakken"},
@@ -40,7 +40,7 @@ dependencies = [
     "pandas >=1.5",
     "scipy>=1.8",
 ]
-version = "0.1.4"
+version = "0.2.0"
 
 [project.urls]
 Source = "https://github.com/AllenInstitute/sciduck"
