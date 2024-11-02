@@ -148,7 +148,8 @@ def apply_constraints(adata: AnnData,
 
         for col, constraints_dict in adata.uns['qc_constraints'].items():
             if col not in adata.obs.columns:
-                warnings.warn(f'Column {col} not in obs, skipping this metric', UserWarning)
+                warnings.warn(f'Column {col} not in obs, skipping and removing this metric', UserWarning)
+                del adata.uns['qc_constraints'][col]
                 continue
 
             column_data = adata.obs[col]
