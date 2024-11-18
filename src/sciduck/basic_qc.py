@@ -122,29 +122,28 @@ def add_group_level_constraint(adata: AnnData,
     constraint_key = f'constraint_{len(adata.uns["qc_constraints"][column]) + 1}'
     adata.uns['qc_constraints'][column][constraint_key] = constraint
 
-def apply_constraints(
-            adata: AnnData,
-            inplace: bool = False
-        ) -> tuple[AnnData, dict]:
+def apply_constraints(adata: AnnData, 
+                        inplace: bool = False
+                    ) -> AnnData:
     """
-    Applies all quality control (QC) constraints stored in 'adata.uns["qc_constraints"]' to 'adata.obs'.
+    Applies all quality control (QC) constraints stored in 'adata.uns["qc_constraints"]' to 'adata.obs' and filtered indices in 'adata.uns["qc_filtered"]'.
 
-    Handles both individual cell-level constraints (range, exclude) and group-level constraints
-    (using a 'groupby' column). Adds a 'keeper_cells' column to 'adata.obs' indicating which cells passed
-    the constraints and returns a dictionary with filtered cell indices for each constraint.
+    This function handles both individual cell-level constraints (range, exclude) and group-level constraints
+    (using a 'groupby' column). The resulting 'keeper_cells' column in 'adata.obs' indicates which cells passed the constraints.
 
     Args:
-        adata (AnnData): The AnnData object where constraints are applied.
-        inplace (bool): If True, only the cells passing the constraints will be retained in 'adata'.
-                        If False (default), the 'keeper_cells' column will be added to 'adata.obs' 
-                        to indicate which cells passed the filtering.
+        adata: The AnnData object where constraints are applied.
+        inplace: If True, only the cells passing the constraints will be retained in 'adata'.
+                 If False (default), the 'keeper_cells' column will be added to 'adata.obs' 
+                 to indicate which cells passed the filtering.
 
     Returns:
-        tuple[AnnData, dict]: The filtered AnnData object and a dictionary with filtered cell indices for each constraint.
+        AnnData: The filtered AnnData object with the 'keeper_cells' column added to 'adata.obs'. If 'inplace=True', 
+                 the returned object will only contain the filtered cells.
     """
     if isinstance(adata, AnnData):
         keeper_cells = pd.Series([True] * adata.n_obs, index=adata.obs.index)
-        filtered_indices = {}
+        adata.uns['qc_filtered'] = {}
         agg_funcs = {'sum': np.sum, 'mean': np.mean, 'std': np.std, 'median': np.median}
 
         for col, constraints_dict in adata.uns['qc_constraints'].items():
@@ -155,10 +154,10 @@ def apply_constraints(
 
             column_data = adata.obs[col]
             col_keeper = pd.Series([True] * adata.n_obs, index=adata.obs.index)
-            filtered_indices[col] = {}
 
             # Iterate over the dictionary of constraints
             for constraint_key, constraints in constraints_dict.items():
+                adata.uns['qc_filtered'][col] = {}
                 gt = pd.Series([True] * adata.n_obs, index=adata.obs.index)
                 lt = pd.Series([True] * adata.n_obs, index=adata.obs.index)
                 exclude = pd.Series([True] * adata.n_obs, index=adata.obs.index)
@@ -185,7 +184,6 @@ def apply_constraints(
                         groups_to_keep = group_keeper[group_keeper].index
                         cur_sub = adata.obs[groupby].isin(groups_to_keep)
                         col_keeper &= cur_sub
-                        filtered_indices[col][constraint_key] = list(adata.obs.index[~cur_sub])
                 else:
                     if constraints['gt'] is not None:
                         gt = column_data >= constraints['gt']
@@ -202,21 +200,15 @@ def apply_constraints(
                             cur_sub = (gt & lt & exclude)
                             cur_sub |= ~subset_in
                             col_keeper &= cur_sub
-                            filtered_indices[col][constraint_key] = list(adata.obs.index[~cur_sub])
                     else:
                         cur_sub = (gt & lt & exclude)
                         col_keeper &= cur_sub
-                        filtered_indices[col][constraint_key] = list(adata.obs.index[~cur_sub])
-
-                # Track cells failing this specific constraint
-                filtered_indices[col][constraint_key] = list(adata.obs.index[~col_keeper])
-
-            keeper_cells &= col_keeper
+                adata.uns['qc_filtered'][col][constraint_key] = list(adata.obs.index[~cur_sub])
+                keeper_cells &= col_keeper
 
         adata.obs['keeper_cells'] = keeper_cells
 
         if inplace:
             adata._inplace_subset_obs(adata.obs['keeper_cells'])
 
-        return adata, filtered_indices
-
+        return adata
