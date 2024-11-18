@@ -154,10 +154,10 @@ def apply_constraints(adata: AnnData,
 
             column_data = adata.obs[col]
             col_keeper = pd.Series([True] * adata.n_obs, index=adata.obs.index)
-
+            adata.uns['qc_filtered'][col] = {}
+            
             # Iterate over the dictionary of constraints
             for constraint_key, constraints in constraints_dict.items():
-                adata.uns['qc_filtered'][col] = {}
                 gt = pd.Series([True] * adata.n_obs, index=adata.obs.index)
                 lt = pd.Series([True] * adata.n_obs, index=adata.obs.index)
                 exclude = pd.Series([True] * adata.n_obs, index=adata.obs.index)
