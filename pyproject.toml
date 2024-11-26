@@ -1,12 +1,13 @@
 [build-system]
-build-backend = "hatchling.build"
 requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
 [project]
 name = "sciduck"
+version = "0.4.0"
 description = "single cell data analyis unification and communication toolkit"
 requires-python = ">=3.9"
-license = "BSD-3-clause"
+license-expression = "BSD-3-clause"
 authors = [
     {name = "Nelson Johansen"},
     {name = "Matthew Schmitz"},
@@ -19,8 +20,8 @@ maintainers = [
 ]
 readme = "README.md"
 classifiers = [
-    "License :: OSI Approved :: BSD License",
-    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 4 - Beta",
     "Environment :: Console",
     "Framework :: Jupyter",
     "Intended Audience :: Developers",
@@ -40,7 +41,6 @@ dependencies = [
     "pandas >=1.5",
     "scipy>=1.8",
 ]
-version = "0.2.0"
 
 [project.urls]
 Source = "https://github.com/AllenInstitute/sciduck"

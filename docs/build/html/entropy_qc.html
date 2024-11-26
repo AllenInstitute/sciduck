@@ -88,7 +88,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>adata</strong> – AnnData object with <cite>annotations</cite></p></li>
-<li><p><strong>annotations</strong> – Cell level annotations.</p></li>
+<li><p><strong>annotation_columns</strong> – Cell level annotations.</p></li>
 <li><p><strong>nearest_neighbors</strong> – Number of nearest neighbors.</p></li>
 <li><p><strong>dim</strong> – Dimensionality reduction</p></li>
 </ul>
@@ -126,8 +126,8 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>adata</strong> – Anndata object.</p></li>
 <li><p><strong>cluster_column</strong> – Column name in adata.obs containing cluster labels.</p></li>
-<li><p><strong>entropy_columns</strong> – Column name in adata.obs to compute entropy on.</p></li>
-<li><p><strong>entropy_thresholds</strong> – Minimum entropy values for each annotation being considered.</p></li>
+<li><p><strong>annotation_columns</strong> – Column name in adata.obs to compute entropy on.</p></li>
+<li><p><strong>annotation_thresholds</strong> – Minimum entropy values for each annotation being considered. ## HOW TO ENCODE DIRECTION???</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

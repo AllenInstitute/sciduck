@@ -45,9 +45,10 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">sciduck.basic_qc module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#sciduck.basic_qc.filter_on_counts_genes"><code class="docutils literal notranslate"><span class="pre">filter_on_counts_genes()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sciduck.basic_qc.filter_on_precomputed_metrics"><code class="docutils literal notranslate"><span class="pre">filter_on_precomputed_metrics()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sciduck.basic_qc.filter_utilizing_coarse_labels"><code class="docutils literal notranslate"><span class="pre">filter_utilizing_coarse_labels()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sciduck.basic_qc.add_exclude_constraint"><code class="docutils literal notranslate"><span class="pre">add_exclude_constraint()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sciduck.basic_qc.add_group_level_constraint"><code class="docutils literal notranslate"><span class="pre">add_group_level_constraint()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sciduck.basic_qc.add_range_constraint"><code class="docutils literal notranslate"><span class="pre">add_range_constraint()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sciduck.basic_qc.apply_constraints"><code class="docutils literal notranslate"><span class="pre">apply_constraints()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="entropy_qc.html">sciduck.entropy_qc module</a></li>
@@ -81,64 +82,89 @@
   <section id="module-sciduck.basic_qc">
 <span id="sciduck-basic-qc-module"></span><h1>sciduck.basic_qc module<a class="headerlink" href="#module-sciduck.basic_qc" title="Link to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="sciduck.basic_qc.filter_on_counts_genes">
-<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">filter_on_counts_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_counts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_genes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">13000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sciduck.basic_qc.filter_on_counts_genes" title="Link to this definition"></a></dt>
-<dd><p>Filter samples based on number of counts (UMIs) and genes detected.</p>
+<dt class="sig sig-object py" id="sciduck.basic_qc.add_exclude_constraint">
+<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">add_exclude_constraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sciduck.basic_qc.add_exclude_constraint" title="Link to this definition"></a></dt>
+<dd><p>Adds an exclude constraint to a specific column in the AnnData object.</p>
+<p>This function filters out cells where the value in the specified column is in ‘exclude_values’.
+Subsetting based on another column is supported.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>adata</strong> – Anndata object.</p></li>
-<li><p><strong>min_counts</strong> – Minimum counts detected.</p></li>
-<li><p><strong>max_counts</strong> – Maximum counts detected.</p></li>
-<li><p><strong>min_genes</strong> – Minimum genes detected.</p></li>
-<li><p><strong>max_genes</strong> – Maximum genes detected.</p></li>
-<li><p><strong>inplace</strong> – Update the adata object in place or return unmodified object with keeper_cells flagged.</p></li>
+<li><p><strong>adata</strong> – The AnnData object where constraints will be added.</p></li>
+<li><p><strong>column</strong> – The column in ‘adata.obs’ for which the exclude constraint will be applied.</p></li>
+<li><p><strong>exclude_values</strong> – The list of values that should be excluded from ‘column’.</p></li>
+<li><p><strong>subset</strong> – The column in ‘adata.obs’ to use for subsetting the data.</p></li>
+<li><p><strong>subset_values</strong> – A list of values for subsetting, applied to the ‘subset’ column.</p></li>
 </ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns either AnnData | None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sciduck.basic_qc.filter_on_precomputed_metrics">
-<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">filter_on_precomputed_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doublet_score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pct_counts_mt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GEX_Reads_mapped_confidently_to_genome</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GEX_Reads_mapped_to_genome</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GEX_Reads_with_TSO</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sciduck.basic_qc.filter_on_precomputed_metrics" title="Link to this definition"></a></dt>
-<dd><p>Filter samples based on precomputed quality control metrics.</p>
+<dt class="sig sig-object py" id="sciduck.basic_qc.add_group_level_constraint">
+<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">add_group_level_constraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupby</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agg_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mean'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sciduck.basic_qc.add_group_level_constraint" title="Link to this definition"></a></dt>
+<dd><p>Adds a group-level constraint to a specific column in the AnnData object.</p>
+<p>Cells are grouped by ‘groupby’, and an aggregation function (e.g., ‘mean’) is applied to each group
+for the specified column. Cells in groups that meet the ‘gt’ and ‘lt’ conditions are kept.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>adata</strong> – Anndata object.</p></li>
-<li><p><strong>doublet_score</strong> – Maximum doublet score.</p></li>
-<li><p><strong>pct_counts_mt</strong> – Maximum percentage of counts in mitochondrial genes.</p></li>
-<li><p><strong>GEX_Reads_mapped_confidently_to_genome</strong> – Minimum percentage of confidently mapped reads. There is no pre-defined good practice for threshold, user must specify.</p></li>
-<li><p><strong>GEX_Reads_mapped_to_genome</strong> – Minimum percentage of reads mapped to genome. There is no pre-defined good practice for threshold, user must specify.</p></li>
-<li><p><strong>GEX_Reads_with_TSO</strong> – Maximum percentage of reads with TSO, per cell. There is no pre-defined good practice for threshold, user must specify.</p></li>
-<li><p><strong>inplace</strong> – Update the adata object in place or return unmodified object with keeper_cells flagged.</p></li>
+<li><p><strong>adata</strong> – The AnnData object where constraints will be added.</p></li>
+<li><p><strong>column</strong> – The column in ‘adata.obs’ for which the group-level constraint will be applied.</p></li>
+<li><p><strong>groupby</strong> – The column in ‘adata.obs’ used to group the cells (e.g., cluster ID).</p></li>
+<li><p><strong>gt</strong> – The lower bound for the aggregated group value. If None, the lower bound is open.</p></li>
+<li><p><strong>lt</strong> – The upper bound for the aggregated group value. If None, the upper bound is open.</p></li>
+<li><p><strong>agg_func</strong> – The aggregation function to apply to the groups. Can be ‘mean’, ‘sum’,
+‘std’, or ‘median’. Default is ‘mean’.</p></li>
 </ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns either AnnData | None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sciduck.basic_qc.filter_utilizing_coarse_labels">
-<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">filter_utilizing_coarse_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarse_label_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarse_label_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'Neurons':</span> <span class="pre">['Excitatory',</span> <span class="pre">'Inhibitory'],</span> <span class="pre">'Non-Neurons':</span> <span class="pre">['Astrocytes',</span> <span class="pre">'Oligodendrocytes',</span> <span class="pre">'Microglia',</span> <span class="pre">'Endothelial',</span> <span class="pre">'Pericytes']}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarse_label_gene_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{'Neurons':</span> <span class="pre">2000,</span> <span class="pre">'Non-Neurons':</span> <span class="pre">1000}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sciduck.basic_qc.filter_utilizing_coarse_labels" title="Link to this definition"></a></dt>
-<dd><p>Filter samples based on coarse label specific thresholds for genes detected.</p>
+<dt class="sig sig-object py" id="sciduck.basic_qc.add_range_constraint">
+<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">add_range_constraint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sciduck.basic_qc.add_range_constraint" title="Link to this definition"></a></dt>
+<dd><p>Adds a range constraint to a specific column in the AnnData object.</p>
+<p>This function filters cells where values in the specified column fall within the range
+[gt, lt]. Subsetting based on another column is supported.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>adata</strong> – Anndata object.</p></li>
-<li><p><strong>coarse_label_column</strong> – Column name in adata.obs containing coarse labeling identifying neuron and non-neuronal cell types.</p></li>
-<li><p><strong>coarse_label_map</strong> – Coarse cell type labels to define specific filtering on.</p></li>
-<li><p><strong>coarse_label_gene_threshold</strong> – Minimum genes detected for each coarse label.</p></li>
-<li><p><strong>inplace</strong> – Update the adata object in place or return unmodified object with keeper_cells flagged.</p></li>
+<li><p><strong>adata</strong> – The AnnData object where constraints will be added.</p></li>
+<li><p><strong>column</strong> – The column in ‘adata.obs’ for which the range constraint will be applied.</p></li>
+<li><p><strong>gt</strong> – The lower bound of the range (inclusive). If None, the lower bound is open.</p></li>
+<li><p><strong>lt</strong> – The upper bound of the range (inclusive). If None, the upper bound is open.</p></li>
+<li><p><strong>subset</strong> – The column in ‘adata.obs’ to use for subsetting the data.</p></li>
+<li><p><strong>subset_values</strong> – A list of values for subsetting, applied to the ‘subset’ column.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sciduck.basic_qc.apply_constraints">
+<span class="sig-prename descclassname"><span class="pre">sciduck.basic_qc.</span></span><span class="sig-name descname"><span class="pre">apply_constraints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span></span></span><a class="headerlink" href="#sciduck.basic_qc.apply_constraints" title="Link to this definition"></a></dt>
+<dd><p>Applies all quality control (QC) constraints stored in ‘adata.uns[“qc_constraints”]’ to ‘adata.obs’ and filtered indices in ‘adata.uns[“qc_filtered”]’.</p>
+<p>This function handles both individual cell-level constraints (range, exclude) and group-level constraints
+(using a ‘groupby’ column). The resulting ‘keeper_cells’ column in ‘adata.obs’ indicates which cells passed the constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – The AnnData object where constraints are applied.</p></li>
+<li><p><strong>inplace</strong> – If True, only the cells passing the constraints will be retained in ‘adata’.
+If False (default), the ‘keeper_cells’ column will be added to ‘adata.obs’
+to indicate which cells passed the filtering.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns either AnnData | None</p>
+<dd class="field-even"><p><dl class="simple">
+<dt>The filtered AnnData object with the ‘keeper_cells’ column added to ‘adata.obs’. If ‘inplace=True’,</dt><dd><p>the returned object will only contain the filtered cells.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnnData</p>
 </dd>
 </dl>
 </dd></dl>
