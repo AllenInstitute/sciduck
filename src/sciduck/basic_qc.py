@@ -196,6 +196,8 @@ def apply_constraints(adata: AnnData,
 
                     if constraints['subset'].items():
                         for subset_col, subset_values in constraints['subset'].items():
+                            if subset_col not in adata.obs
+                                warnings.warn(f'Subset column {subset_col} not in obs, applying constraint to all', UserWarning)
                             subset_in = adata.obs[subset_col].isin(subset_values) if subset_col in adata.obs else pd.Series([True] * adata.n_obs, index=adata.obs.index)
                             cur_sub = (gt & lt & exclude)
                             cur_sub |= ~subset_in
