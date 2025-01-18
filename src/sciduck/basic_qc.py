@@ -146,10 +146,12 @@ def apply_constraints(adata: AnnData,
         adata.uns['qc_filtered'] = {}
         agg_funcs = {'sum': np.sum, 'mean': np.mean, 'std': np.std, 'median': np.median}
 
+        keys_to_remove = [] 
+        
         for col, constraints_dict in adata.uns['qc_constraints'].items():
             if col not in adata.obs.columns:
                 warnings.warn(f'Column {col} not in obs, skipping and removing this metric', UserWarning)
-                del adata.uns['qc_constraints'][col]
+                keys_to_remove.append(col)
                 continue
 
             column_data = adata.obs[col]
@@ -206,6 +208,10 @@ def apply_constraints(adata: AnnData,
                 adata.uns['qc_filtered'][col][constraint_key] = list(adata.obs.index[~cur_sub])
                 keeper_cells &= col_keeper
 
+
+        for key in keys_to_remove:
+            del adata.uns['qc_constraints'][key]
+        
         adata.obs['keeper_cells'] = keeper_cells
 
         if inplace:
