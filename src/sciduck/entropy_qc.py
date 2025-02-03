@@ -2,41 +2,6 @@ from anndata import AnnData
 import scanpy as sc
 import numpy as np
 
-def filter_on_cluster_entropy(adata: AnnData,
-                                cluster_column: str,
-                                annotation_columns: list,
-                                annotation_thresholds: dict,
-                            ) -> AnnData | None:
-    """
-    Filter samples based on cluster entropy.
-
-    Args:
-        adata: Anndata object.
-        cluster_column: Column name in adata.obs containing cluster labels.
-        annotation_columns: Column name in adata.obs to compute entropy on.
-        annotation_thresholds: Minimum entropy values for each annotation being considered. ## HOW TO ENCODE DIRECTION???
-
-    Returns:
-        Returns either AnnData | None
-    """
-    if isinstance(adata, AnnData):
-        ## Filter cells based on counts and genes detected
-        if 'keeper_cells' not in adata.obs.columns:
-            adata.obs["keeper_cells"] = [True] * adata.shape[0]
-        ## Compute cluster entropy for each annotation
-        for anno in annotation_columns:
-            adata.obs[anno + "_entropy"] = cluster_entropy_qc_metric(adata, cluster_column, anno)
-        ## Apply filtering based on entropy thresholds
-        for anno, threshold in annotation_thresholds.items():
-            adata.obs["keeper_cells"] &= adata.obs[anno + "_entropy"] > threshold
-        ##
-        if inplace:
-            adata._inplace_subset_obs(adata.obs["keeper_cells"])
-            return None
-        else:
-            return adata
-
-
 def cluster_entropy_qc_metric(adata: AnnData,
                                 cluster_column: str,
                                 annotation_column: str
