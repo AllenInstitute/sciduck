@@ -216,5 +216,13 @@ def apply_constraints(adata: AnnData,
 
         if inplace:
             adata._inplace_subset_obs(adata.obs['keeper_cells'])
-
+            # Move the current qc_constraints to a uniquely named key and clear qc_constraints to fix weird bug hopefully
+            count = 1
+            new_key = f"qc_constraints_{count}"
+            while new_key in adata.uns:
+                count += 1
+                new_key = f"qc_constraints_{count}"
+            adata.uns[new_key] = adata.uns["qc_constraints"]
+            adata.uns["qc_constraints"] = {}
+        
         return adata
