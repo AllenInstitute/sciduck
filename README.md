@@ -12,7 +12,7 @@ datasets of more than one million cells.
 
 ## Documentation
 
-[Read the docs](https://sciduck.readthedocs.io/en/latest/)
+[Read the docs](https://sciduck.readthedocs.io/en/latest/sciduck.html)
 
 ## Installation
 
