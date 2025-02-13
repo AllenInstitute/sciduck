@@ -52,8 +52,9 @@ def build_annotation_table(adata: AnnData,
     return pd.DataFrame.from_dict(mapping_summary)
 
 def add_dominant_library_info(adata: AnnData, 
+                    mapping_summary: dict,
                     library_metadata_column: str = "load_name",
-                    mapping_summary: dict) -> dict:
+                    ) -> dict:
     """
     Add dominant library information to the mapping summary.
 

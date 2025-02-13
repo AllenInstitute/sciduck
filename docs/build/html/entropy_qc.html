@@ -46,9 +46,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="basic_qc.html">sciduck.basic_qc module</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">sciduck.entropy_qc module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#sciduck.entropy_qc.cell_entropy_qc_metric"><code class="docutils literal notranslate"><span class="pre">cell_entropy_qc_metric()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sciduck.entropy_qc.cluster_entropy_qc_metric"><code class="docutils literal notranslate"><span class="pre">cluster_entropy_qc_metric()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sciduck.entropy_qc.filter_on_cluster_entropy"><code class="docutils literal notranslate"><span class="pre">filter_on_cluster_entropy()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sciduck.entropy_qc.cell_entropy"><code class="docutils literal notranslate"><span class="pre">cell_entropy()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sciduck.entropy_qc.cluster_entropy"><code class="docutils literal notranslate"><span class="pre">cluster_entropy()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="annotation_table.html">sciduck.annotation_table module</a></li>
@@ -81,8 +80,8 @@
   <section id="module-sciduck.entropy_qc">
 <span id="sciduck-entropy-qc-module"></span><h1>sciduck.entropy_qc module<a class="headerlink" href="#module-sciduck.entropy_qc" title="Link to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="sciduck.entropy_qc.cell_entropy_qc_metric">
-<span class="sig-prename descclassname"><span class="pre">sciduck.entropy_qc.</span></span><span class="sig-name descname"><span class="pre">cell_entropy_qc_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nearest_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'X_scVI'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span></span></span><a class="headerlink" href="#sciduck.entropy_qc.cell_entropy_qc_metric" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sciduck.entropy_qc.cell_entropy">
+<span class="sig-prename descclassname"><span class="pre">sciduck.entropy_qc.</span></span><span class="sig-name descname"><span class="pre">cell_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nearest_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'X_scVI'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span></span></span><a class="headerlink" href="#sciduck.entropy_qc.cell_entropy" title="Link to this definition"></a></dt>
 <dd><p>Compute entropy (mixing) of annotations within a cells local neighborhood.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -100,38 +99,19 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sciduck.entropy_qc.cluster_entropy_qc_metric">
-<span class="sig-prename descclassname"><span class="pre">sciduck.entropy_qc.</span></span><span class="sig-name descname"><span class="pre">cluster_entropy_qc_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#sciduck.entropy_qc.cluster_entropy_qc_metric" title="Link to this definition"></a></dt>
-<dd><p>Compute entropy (mixing) of an annotation within a pre-defined cluster.</p>
+<dt class="sig sig-object py" id="sciduck.entropy_qc.cluster_entropy">
+<span class="sig-prename descclassname"><span class="pre">sciduck.entropy_qc.</span></span><span class="sig-name descname"><span class="pre">cluster_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span></span></span><a class="headerlink" href="#sciduck.entropy_qc.cluster_entropy" title="Link to this definition"></a></dt>
+<dd><p>Compute entropy (mixing) of annotations within a cell set (group_by).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>adata</strong> – Anndata object.</p></li>
-<li><p><strong>cluster_column</strong> – Column name in <cite>obs</cite> containing cluster labels.</p></li>
-<li><p><strong>annotation_columns</strong> – Column name in <cite>obs</cite> containing annotations.</p></li>
+<li><p><strong>adata</strong> – AnnData object with <cite>annotations</cite></p></li>
+<li><p><strong>group_by</strong> – AnnData.obs column that groups cells.</p></li>
+<li><p><strong>annotation_columns</strong> – Cell level annotations.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of cluster entropy quality control metrics.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sciduck.entropy_qc.filter_on_cluster_entropy">
-<span class="sig-prename descclassname"><span class="pre">sciduck.entropy_qc.</span></span><span class="sig-name descname"><span class="pre">filter_on_cluster_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_thresholds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sciduck.entropy_qc.filter_on_cluster_entropy" title="Link to this definition"></a></dt>
-<dd><p>Filter samples based on cluster entropy.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>adata</strong> – Anndata object.</p></li>
-<li><p><strong>cluster_column</strong> – Column name in adata.obs containing cluster labels.</p></li>
-<li><p><strong>annotation_columns</strong> – Column name in adata.obs to compute entropy on.</p></li>
-<li><p><strong>annotation_thresholds</strong> – Minimum entropy values for each annotation being considered. ## HOW TO ENCODE DIRECTION???</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns either AnnData | None</p>
+<dd class="field-even"><p>Returns the updated AnnData object.</p>
 </dd>
 </dl>
 </dd></dl>
