@@ -59,4 +59,3 @@ autodoc_default_options = {
 # pip install sphinx-rtd-theme; https://sphinx-themes.org/sample-sites/sphinx-rtd-theme/
 
 html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
