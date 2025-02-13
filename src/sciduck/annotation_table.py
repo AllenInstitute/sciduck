@@ -3,6 +3,7 @@ import scanpy as sc
 import numpy as np
 
 def build_annotation_table(adata: AnnData, 
+                            group_by = "cluster",
                             categorical_annotations: list = ["donor_name", "load_name", "roi"],
                             numeric_annotations: list = ["doublet_score", "pct_counts_mt"],
                             min_percent: float = 0.05,
@@ -22,36 +23,36 @@ def build_annotation_table(adata: AnnData,
         A mapping_summary containing character and numeric summaries along with donor/lib/roi composition alerts.
     """
     ## Annotations summaries
-    for anno in annotations:
-        freq = adata.obs.groupby(["cluster", anno])[anno].size()
+    for anno in categorical_annotations:
+        print("Processing annotation: ", anno)
+        freq = adata.obs.groupby([group_by, anno])[anno].size()
         mapping_summary[anno] = {}
-        for cluster in np.unique(adata.obs.cluster):
-            cluster_anno = freq.loc[freq.index.get_level_values("cluster") == cluster].sort_values(ascending=False)
+        for cluster in np.unique(adata.obs[group_by]):
+            cluster_anno = freq.loc[freq.index.get_level_values(group_by) == cluster].sort_values(ascending=False)
             cluster_anno = np.round(cluster_anno / cluster_anno.sum(), 2)
             record = ""
             for level in cluster_anno.index.get_level_values(anno):
                 proportion = cluster_anno.loc[cluster_anno.index.get_level_values(anno) == level].values[0]
                 if proportion > min_percent: ## Only show the annotation term when its percentage > 0.05
-                    record += level + "(" + str(proportion) + ")" if level == cluster_anno.index.get_level_values(anno)[0] else "| " + level + "(" + str(proportion) + ")"
+                    record += level + "(" + str(proportion) + ")" if level == cluster_anno.index.get_level_values(anno)[0] else "| " + level + "(" + str(proportion) + ")" 
             mapping_summary[anno][cluster] = record
             if anno in annotation_alerts.keys():
                 alert_status = "Balanced" if cluster_anno.max() < annotation_alerts[anno] else "Cautious"
-                mapping_summary[anno + "_composition_alert"][cluster] = alert_status
+                mapping_summary[f"{anno}_composition_alert"] = {}
+                mapping_summary[f"{anno}_composition_alert"][cluster] = alert_status
 
     ## Calculate the median values for basic qc stats
-    mapping_summary["cluster_size"] = adata.obs.groupby("cluster").size()
-    mapping_summary["gene.counts"] = adata.obs.groupby("cluster")["n_genes_by_counts"].median().round(4)
-    mapping_summary["umi.counts"] = adata.obs.groupby("cluster")["n_counts"].median().round(4)
-    mapping_summary["umi_gene_ratio"] = ratio.round(4)
+    mapping_summary[str(group_by) + "_size"] = adata.obs.groupby(group_by).size()
 
     ## Calculate the median values for numeric annotations each cluster
     for col in numeric_annotations:
-        mapping_summary[f'{col}_median'] = adata.obs.groupby('cluster')[col].median().round(4)
-    
-    return mapping_summary
+        print("Processing annotation: ", col)
+        mapping_summary[f'{col}_median'] = adata.obs.groupby(group_by)[col].median().round(4)
+
+    return pd.DataFrame.from_dict(mapping_summary)
 
 def add_dominant_library_info(adata: AnnData, 
-                    library_metadata_column: str,
+                    library_metadata_column: str = "load_name",
                     mapping_summary: dict) -> dict:
     """
     Add dominant library information to the mapping summary.
