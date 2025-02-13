@@ -14,6 +14,7 @@ def build_annotation_table(adata: AnnData,
     
     Args:
         adata: Anndata object with `annotations` in `obs`.
+        group_by: Anndata.obs to use for grouping cells.
         categorical_annotations: List of categorical metadata to include.
         numeric_annotations: List of numeric metadata to include.
         min_percent: Minimal percentrage to print annotation.
@@ -60,8 +61,8 @@ def add_dominant_library_info(adata: AnnData,
 
     Args:
         adata: Anndata object with `annotations` in `obs`.
-        library_metadata_column: Defaults to `load_name` and describes the sequencing batch.
         mapping_summary: A pre-existing mapping summary dictionary to add information on dominant library.
+        library_metadata_column: Defaults to `load_name` and describes the sequencing batch.
     
     Returns:
         A mapping_summary containing dominant library information.
