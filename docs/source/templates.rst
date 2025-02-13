@@ -1,7 +1,7 @@
-sciduck.annotation\_table module
+sciduck.templates\_table module
 --------------------------------
 
-.. automodule:: sciduck.annotation_table
+.. automodule:: sciduck.templates
    :members:
    :undoc-members:
    :show-inheritance:

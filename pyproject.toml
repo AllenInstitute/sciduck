@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "sciduck"
-version = "0.5.0"
+version = "0.5.1"
 description = "single cell data analyis unification and communication toolkit"
 requires-python = ">=3.9"
 license-expression = "BSD-3-clause"

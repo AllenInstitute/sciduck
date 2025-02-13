@@ -18,46 +18,26 @@ def violin(
     """
     Violin plot.
 
-    Parameters
-    ----------
-    adata
-        Annotated data matrix.
-    y
-        columns in `.obs` to plot for y axis.
-    groupby
-        The key of the observation grouping to use for x axis.
-    log
-        Use log scale for y.
-    scale
-        The method used to scale the width of each violin.
-        If 'width' (the default), each violin will have the same width.
-        If 'area', each violin will have the same area.
-        If 'count', a violin’s width corresponds to the number of observations.
-    order
-        Order of x.
-    xlabel
-        Label of the x axis. Defaults to `groupby`.
-    size
-        Size of the x labels.
-    x_label_rotation
-        Rotation of xtick labels.
-    ylines
-        Add horizontal lines to the plot.
-
-    Returns
-    -------
-    Tuple[Axes, Axes]
+    Args:
+        adata: Annotated data matrix.
+        y: columns in `.obs` to plot for y axis.
+        groupby: The key of the observation grouping to use for x axis.
+        log: Use log scale for y.
+        scale: The method used to scale the width of each violin.
+            If 'width' (the default), each violin will have the same width.
+            If 'area', each violin will have the same area.
+            If 'count', a violin’s width corresponds to the number of observations.
+        order: Order of x.
+        xlabel: Label of the x axis. Defaults to `groupby`.
+        size: Size of the x labels.
+        x_label_rotation: Rotation of xtick labels.
+        ylines: Add horizontal lines to the plot.
+        
+    Returns:
+        Tuple[Axes, Axes]
         A tuple containing two matplotlib Axes objects:
-        - The first Axes object is the bar plot showing the count of observations for each group.
-        - The second Axes object is the violin plot showing the distribution of values in `y` for each group.
-    Examples
-    --------
-    import sciduck as sd
-    # Call the function
-    ax1, ax2=sd.pl.violin(adata, groupby='AIT21_Class', y='n_genes_by_counts', x_label_rotation=20, size=12, ylines=[1000,2000,3000])
-    # Customize further if needed
-    ax2.set_title("Violin Plot")
-
+            The first Axes object is the bar plot showing the count of observations for each group.
+            The second Axes object is the violin plot showing the distribution of values in `y` for each group.
     """
 
     count_values = adata.obs[groupby].value_counts().reset_index()
