@@ -15,6 +15,6 @@ documentation for details.
    :maxdepth: 2
    :caption: Contents:
 
-   basic_qc
-   entropy_qc
-   annotation_table
+   .. basic_qc
+   .. entropy_qc
+   .. annotation_table

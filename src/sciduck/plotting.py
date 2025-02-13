@@ -13,10 +13,9 @@ def violin(
         xlabel: str = "",
         size: int = 4,
         x_label_rotation: float = 0,
-        ylines: Sequence[float] = []
-        ):
+        ylines: Sequence[float] = []) -> tuple:
     """
-    Violin plot.
+    Compute entropy (mixing) of annotations within a cells local neighborhood. 
 
     Args:
         adata: Annotated data matrix.
@@ -24,9 +23,6 @@ def violin(
         groupby: The key of the observation grouping to use for x axis.
         log: Use log scale for y.
         scale: The method used to scale the width of each violin.
-            If 'width' (the default), each violin will have the same width.
-            If 'area', each violin will have the same area.
-            If 'count', a violin’s width corresponds to the number of observations.
         order: Order of x.
         xlabel: Label of the x axis. Defaults to `groupby`.
         size: Size of the x labels.
@@ -35,9 +31,6 @@ def violin(
         
     Returns:
         Tuple[Axes, Axes]
-        A tuple containing two matplotlib Axes objects:
-            The first Axes object is the bar plot showing the count of observations for each group.
-            The second Axes object is the violin plot showing the distribution of values in `y` for each group.
     """
 
     count_values = adata.obs[groupby].value_counts().reset_index()
@@ -74,3 +67,30 @@ def violin(
     plt.tight_layout()
 
     return ax1, ax2
+
+
+
+# """
+#     Violin plot.
+
+#     Args:
+#         adata: Annotated data matrix.
+#         y: columns in `.obs` to plot for y axis.
+#         groupby: The key of the observation grouping to use for x axis.
+#         log: Use log scale for y.
+#         scale: The method used to scale the width of each violin.
+#             If 'width' (the default), each violin will have the same width.
+#             If 'area', each violin will have the same area.
+#             If 'count', a violin’s width corresponds to the number of observations.
+#         order: Order of x.
+#         xlabel: Label of the x axis. Defaults to `groupby`.
+#         size: Size of the x labels.
+#         x_label_rotation: Rotation of xtick labels.
+#         ylines: Add horizontal lines to the plot.
+        
+#     Returns:
+#         Tuple[Axes, Axes]
+#         A tuple containing two matplotlib Axes objects:
+#             The first Axes object is the bar plot showing the count of observations for each group.
+#             The second Axes object is the violin plot showing the distribution of values in `y` for each group.
+#     """
