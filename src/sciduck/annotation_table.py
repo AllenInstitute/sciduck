@@ -29,6 +29,8 @@ def build_annotation_table(adata: AnnData,
         print("Processing annotation: ", anno)
         freq = adata.obs.groupby([group_by, anno])[anno].size()
         mapping_summary[anno] = {}
+        if anno in annotation_alerts.keys() and f"{anno}_composition_alert" not in mapping_summary:
+            mapping_summary[f"{anno}_composition_alert"] = {}
         for cluster in np.unique(adata.obs[group_by]):
             cluster_anno = freq.loc[freq.index.get_level_values(group_by) == cluster].sort_values(ascending=False)
             cluster_anno = np.round(cluster_anno / cluster_anno.sum(), 2)
@@ -40,7 +42,6 @@ def build_annotation_table(adata: AnnData,
             mapping_summary[anno][cluster] = record
             if anno in annotation_alerts.keys():
                 alert_status = "Balanced" if cluster_anno.max() < annotation_alerts[anno] else "Cautious"
-                mapping_summary[f"{anno}_composition_alert"] = {}
                 mapping_summary[f"{anno}_composition_alert"][cluster] = alert_status
 
     ## Calculate the median values for basic qc stats
