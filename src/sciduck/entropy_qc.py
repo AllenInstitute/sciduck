@@ -1,5 +1,6 @@
 from anndata import AnnData
 import scanpy as sc
+from scipy.spatial import KDTree
 from scipy.stats import entropy
 import numpy as np
 
@@ -25,12 +26,12 @@ def cell_entropy(adata: AnnData,
     nnTree = KDTree(adata.obsm[dim])
     nearest_dist, nearest_ind = nnTree.query(adata.obsm[dim], k=nearest_neighbors)
     ##
-    for anno in annotations:
+    for anno in annotation_columns:
         print("Computing entropy on: " + anno)
         adata.obs[anno + "_entropy"] = -1 ## Initialize with a value outside range of entropy.
         for cell in range(0, adata.shape[0]):
             nearest_neighbors = nearest_ind[cell,:]
-            adata.obs.loc[adata.obs.index[cell], anno + "_entropy"] = scipy.stats.entropy(adata.obs.loc[adata.obs.index[nearest_neighbors],anno].value_counts()/len(nearest_neighbors))
+            adata.obs.loc[adata.obs.index[cell], anno + "_entropy"] = entropy(adata.obs.loc[adata.obs.index[nearest_neighbors],anno].value_counts()/len(nearest_neighbors))
     return adata
 
 def cluster_entropy(adata: AnnData,
@@ -49,6 +50,7 @@ def cluster_entropy(adata: AnnData,
         Returns the updated AnnData object.
     """
     ##
-    for anno in annotations:
+    for anno in annotation_columns:
         print("Computing entropy on: " + anno)
         adata.obs[anno + "_entropy"] = adata.obs.groupby(group_by)[anno].value_counts(normalize=True).groupby(group_by).apply(lambda x: entropy(x))
+    return adata
