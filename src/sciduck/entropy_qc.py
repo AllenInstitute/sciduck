@@ -106,8 +106,6 @@ def cluster_annotation_entropy(adata: AnnData,
 
     return adata
 
-    from anndata import AnnData
-
 def extract_entropy_df(adata: AnnData,
                        cluster_col: list,
                        label_cols: list,
