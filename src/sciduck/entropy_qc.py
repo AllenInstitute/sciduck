@@ -40,69 +40,47 @@ def cluster_entropy(adata: AnnData,
                     annotation_columns: list
                 ) -> AnnData:
     """
-    Compute entropy (mixing) of annotations within a cell set (group_by). 
-
-    Args:
-        adata: AnnData object with `annotations`
-        group_by: AnnData.obs column that groups cells.
-        annotation_columns: Cell level annotations.
-        
-    Returns:
-        Returns the updated AnnData object.
+    Compute entropy (mixing) of annotations within a cell set (group_by),
+    and assign that entropy to all cells in the group.
     """
-    ##
     for anno in annotation_columns:
-        print("Computing entropy on: " + anno)
-        adata.obs[anno + "_entropy"] = adata.obs.groupby(group_by)[anno].value_counts(normalize=True).groupby(group_by).apply(lambda x: entropy(x))
+        print("Computing entropy on:", anno)
+        
+        # First compute per-group entropy
+        group_entropies = (
+            adata.obs.groupby(group_by)[anno]
+            .value_counts(normalize=True)
+            .groupby(level=0)
+            .apply(lambda x: entropy(x.values))
+        )
+        
+        # Assign back to cells
+        adata.obs[f"{anno}_entropy"] = adata.obs[group_by].map(group_entropies)
+
     return adata
 
 def cluster_annotation_entropy(adata: AnnData,
                                cluster_col: str,
-                               label_cols: list
+                               label_cols: list,
+                               joint_entropy_key: str = "joint_entropy"
                               ) -> AnnData:
     """
-    Compute per-cluster entropy for each label column individually,
+    Compute per-cluster entropy for each label column individually (via `cluster_entropy`),
     and the joint entropy across all label columns for each cluster.
-    
-    The computed values are added to `adata.obs` for all cells,
-    using the following keys:
-        - For each label: <label>_cluster_entropy
-        - For joint entropy: joint_entropy
-
-    Args:
-        adata (AnnData): Annotated data matrix with `.obs` containing both
-                         clustering labels and categorical annotation columns.
-        cluster_col (str): The name of the column in `adata.obs` that defines clusters (e.g., 'leiden').
-        label_cols (list of str): List of one or more columns in `adata.obs` for which to compute entropy.
-                                  These should be categorical annotations (e.g., 'batch', 'cell_type').
-
-    Returns:
-        AnnData: The input `adata` object with new `.obs` columns added:
-                 - `<label>_cluster_entropy`: entropy of the label distribution within each cluster
-                 - `joint_entropy`: entropy of the joint label distribution within each cluster
+    Adds per-cell values to adata.obs.
     """
     print(f"Computing cluster-wise annotation entropy for labels: {label_cols}")
-    cluster_groups = adata.obs.groupby(cluster_col)
+    
+    # Step 1: Compute individual entropies using helper
+    adata = cluster_entropy(adata, group_by=cluster_col, annotation_columns=label_cols)
 
-    for cluster, group in cluster_groups:
-        cluster_index = group.index  # Index of all cells in the current cluster
-        stats = {}
-
-        # Compute entropy for each label separately
-        for label in label_cols:
-            label_counts = group[label].value_counts(normalize=True)
-            stats[f"{label}_cluster_entropy"] = entropy(label_counts)
-
-        # Compute joint entropy across all label combinations
-        if len(label_cols) >= 2:
-            # Create a single string per row that represents the combination of labels
-            joint_labels = group[label_cols].astype(str).agg("_".join, axis=1)
-            joint_counts = joint_labels.value_counts(normalize=True)
-            stats["joint_entropy"] = entropy(joint_counts)
-
-        # Assign entropy values to each cell in the cluster
-        for key, val in stats.items():
-            adata.obs.loc[cluster_index, key] = val
+    # Step 2: Compute joint entropy
+    if len(label_cols) >= 2:
+        joint_entropies = (
+            adata.obs.groupby(cluster_col)[label_cols]
+            .apply(lambda df: entropy(df.astype(str).agg('_'.join, axis=1).value_counts(normalize=True).values))
+        )
+        adata.obs[joint_entropy_key] = adata.obs[cluster_col].map(joint_entropies)
 
     return adata
 
