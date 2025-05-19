@@ -59,28 +59,69 @@ def cluster_entropy(adata: AnnData,
 
     return adata
 
-def cluster_annotation_entropy(adata: AnnData,
-                               cluster_col: str,
-                               label_cols: list,
-                               joint_entropy_key: str = "joint_entropy"
-                              ) -> AnnData:
+def cluster_annotation_entropy(
+    adata: AnnData,
+    cluster_col: str,
+    label_cols: list,
+    joint_entropy_key: str = "joint_entropy",
+    exclude_label: str = "unknown",
+    threshold: float = 0.1,
+    debug: bool = False
+) -> AnnData:
     """
-    Compute per-cluster entropy for each label column individually (via `cluster_entropy`),
-    and the joint entropy across all label columns for each cluster.
-    Adds per-cell values to adata.obs.
+    Compute per-cluster entropy for each label column individually using `cluster_entropy`,
+    and compute entropy based on disagreement between the two labels,
+    excluding cells where either label is `exclude_label`.
+    Also adds a boolean column `inconsistent_label` which is True if all entropies >= threshold.
     """
-    print(f"Computing cluster-wise annotation entropy for labels: {label_cols}")
-    
-    # Step 1: Compute individual entropies using helper
+    assert len(label_cols) == 2, "Exactly two label columns required"
+
+    # Step 1: compute per-label entropy
     adata = cluster_entropy(adata, group_by=cluster_col, annotation_columns=label_cols)
 
-    # Step 2: Compute joint entropy
-    if len(label_cols) >= 2:
-        joint_entropies = (
-            adata.obs.groupby(cluster_col)[label_cols]
-            .apply(lambda df: entropy(df.astype(str).agg('_'.join, axis=1).value_counts(normalize=True).values))
-        )
-        adata.obs[joint_entropy_key] = adata.obs[cluster_col].map(joint_entropies)
+    # Step 2: compute joint (disagreement) entropy
+    joint_entropies = {}
+    for cluster, group in tqdm(adata.obs.groupby(cluster_col), desc="Computing mismatch entropy"):
+        labels = group[label_cols].astype(str).apply(lambda x: x.str.strip().str.lower())
+
+        valid_mask = (labels[label_cols[0]] != exclude_label) & (labels[label_cols[1]] != exclude_label)
+        valid_labels = labels[valid_mask]
+
+        if valid_labels.empty:
+            joint_entropies[cluster] = 0.0
+            continue
+
+        mismatches = valid_labels[valid_labels[label_cols[0]] != valid_labels[label_cols[1]]]
+        disagreement_fraction = len(mismatches) / len(valid_labels)
+        joint_entropies[cluster] = disagreement_fraction
+
+        if debug:
+            print(f"\n--- Cluster {cluster} mismatch debug ---")
+            print(f"Valid cells: {len(valid_labels)}")
+            print(f"Mismatches: {len(mismatches)}")
+            print(f"Disagreement fraction: {disagreement_fraction:.4f}")
+            print("Top mismatch pairs:")
+            print(
+                mismatches.value_counts()
+                .rename("count")
+                .reset_index()
+                .head()
+            )
+
+    adata.obs[joint_entropy_key] = adata.obs[cluster_col].map(joint_entropies)
+
+    # Step 3: define inconsistent_label flag
+    col1_entropy = adata.obs[f"{label_cols[0]}_entropy"]
+    col2_entropy = adata.obs[f"{label_cols[1]}_entropy"]
+    joint_entropy = adata.obs[joint_entropy_key]
+
+    inconsistent_flag = (
+        (col1_entropy >= threshold) &
+        (col2_entropy >= threshold) &
+        (joint_entropy >= threshold)
+    )
+
+    adata.obs["inconsistent_label"] = inconsistent_flag
 
     return adata
 
@@ -99,7 +140,7 @@ def extract_entropy_df(adata: AnnData,
     Returns:
         pd.DataFrame with one row per cluster and columns for each entropy metric.
     """
-    entropy_cols = [f"{label}_cluster_entropy" for label in label_cols]
+    entropy_cols = [f"{label}_entropy" for label in label_cols]
 
     if len(label_cols) >= 2:
         entropy_cols.append("joint_entropy")
