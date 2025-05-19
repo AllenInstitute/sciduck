@@ -4,6 +4,7 @@ from scipy.spatial import KDTree
 from scipy.stats import entropy
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 
 def cell_entropy(adata: AnnData,
                     annotation_columns: list,
