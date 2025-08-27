@@ -151,4 +151,5 @@ def extract_entropy_df(adata: AnnData,
         .drop_duplicates(subset=cluster_col)
         .set_index(cluster_col)
         .sort_index()
+    )
     
